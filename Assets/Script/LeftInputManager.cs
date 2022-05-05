@@ -12,6 +12,7 @@ public class LeftInputManager : MonoBehaviour
     GameObject minusPrefab;
     private GameObject minusObject;
     private Vector3 endPos;
+    private bool hit_f;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +24,7 @@ public class LeftInputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        hit_f = false;
         endPos = leftController.transform.position + leftController.transform.forward * 100.0f;
         RaycastHit[] hits;
         hits = Physics.RaycastAll(leftController.transform.position, leftController.transform.forward, 100.0f);
@@ -31,6 +33,7 @@ public class LeftInputManager : MonoBehaviour
             endPos = hit.point;
             if (hit.collider.tag == "bridge")
             {
+                hit_f = true;
                 if (minusObject == null)
                 {
                     Quaternion vertical_qua = Quaternion.FromToRotation(Vector3.up, hit.normal);
@@ -42,6 +45,11 @@ public class LeftInputManager : MonoBehaviour
                 }
                 break;
             }
+        }
+
+        if (!hit_f)
+        {
+            Destroy(minusObject);
         }
 
         rayObject.SetPosition(0, leftController.transform.position); // 0番目の頂点を左手コントローラの位置に設定

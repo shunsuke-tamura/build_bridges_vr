@@ -12,6 +12,7 @@ public class RightInputManager : MonoBehaviour
     GameObject plusPrefab;
     private GameObject plusObject;
     private Vector3 endPos;
+    private bool hit_f;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +24,7 @@ public class RightInputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        hit_f = false;
         endPos = rightController.transform.position + rightController.transform.forward * 100.0f;
         RaycastHit[] hits;
         hits = Physics.RaycastAll(rightController.transform.position, rightController.transform.forward, 100.0f);
@@ -31,6 +33,7 @@ public class RightInputManager : MonoBehaviour
             endPos = hit.point;
             if (hit.collider.tag == "bridge")
             {
+                hit_f = true;
                 if (plusObject == null)
                 {
                     Quaternion vertical_qua = Quaternion.FromToRotation(Vector3.up, hit.normal);
@@ -43,7 +46,12 @@ public class RightInputManager : MonoBehaviour
                 break;
             }
         }
-        
+
+        if (!hit_f)
+        {
+            Destroy(plusObject);
+        }
+
         rayObject.SetPosition(0, rightController.transform.position);
         rayObject.SetPosition(1, endPos);
     }
