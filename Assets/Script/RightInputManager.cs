@@ -43,6 +43,11 @@ public class RightInputManager : MonoBehaviour
                 {
                     plusObject.transform.position = hit.point;
                 }
+
+                if (OVRInput.Get(OVRInput.RawButton.RIndexTrigger))
+                {
+                    hit.transform.localScale = new Vector3(hit.transform.localScale.x, hit.transform.localScale.y + 0.1f, hit.transform.localScale.z);
+                }
                 break;
             }
         }
