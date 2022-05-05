@@ -11,6 +11,7 @@ public class LeftInputManager : MonoBehaviour
     [SerializeField]
     GameObject minusPrefab;
     private GameObject minusObject;
+    private Vector3 endPos;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,13 +23,12 @@ public class LeftInputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rayObject.SetPosition(0, leftController.transform.position); // 0番目の頂点を左手コントローラの位置に設定
-        rayObject.SetPosition(1, leftController.transform.position + leftController.transform.forward * 100.0f); // 1番目の頂点を左手コントローラの位置から100m先に設定
-
+        endPos = leftController.transform.position + leftController.transform.forward * 100.0f;
         RaycastHit[] hits;
         hits = Physics.RaycastAll(leftController.transform.position, leftController.transform.forward, 100.0f);
         foreach (var hit in hits)
         {
+            endPos = hit.point;
             if (hit.collider.tag == "bridge")
             {
                 if (minusObject == null)
@@ -43,5 +43,8 @@ public class LeftInputManager : MonoBehaviour
                 break;
             }
         }
+
+        rayObject.SetPosition(0, leftController.transform.position); // 0番目の頂点を左手コントローラの位置に設定
+        rayObject.SetPosition(1, endPos); // 1番目の頂点を左手コントローラの位置から100m先に設定
     }
 }
