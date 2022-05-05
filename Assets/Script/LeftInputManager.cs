@@ -43,6 +43,11 @@ public class LeftInputManager : MonoBehaviour
                 {
                     minusObject.transform.position = hit.point;
                 }
+
+                if (OVRInput.Get(OVRInput.RawButton.LIndexTrigger))
+                {
+                    hit.transform.localScale = new Vector3(hit.transform.localScale.x, hit.transform.localScale.y - 0.1f, hit.transform.localScale.z);
+                }
                 break;
             }
         }
