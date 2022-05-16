@@ -46,10 +46,9 @@ public class LeftInputManager : MonoBehaviour
 
                 if (OVRInput.Get(OVRInput.RawButton.LIndexTrigger))
                 {
-                    GameObject parent = hit.transform.parent.gameObject;
-                    if (parent.transform.localScale.y > 1.0f)
+                    if (hit.transform.localScale.y > 1.0f)
                     {
-                        parent.transform.localScale = new Vector3(parent.transform.localScale.x, parent.transform.localScale.y - 0.1f, parent.transform.localScale.z);
+                        hit.transform.localScale = new Vector3(hit.transform.localScale.x, hit.transform.localScale.y - 0.1f, hit.transform.localScale.z);
                     }
                 }
                 break;

@@ -50,8 +50,7 @@ public class RightInputManager : MonoBehaviour
 
                 if (OVRInput.Get(OVRInput.RawButton.RIndexTrigger))
                 {
-                    GameObject parent = hit.transform.parent.gameObject;
-                    parent.transform.localScale = new Vector3(parent.transform.localScale.x, parent.transform.localScale.y + 0.1f, parent.transform.localScale.z);
+                    hit.transform.localScale = new Vector3(hit.transform.localScale.x, hit.transform.localScale.y + 0.1f, hit.transform.localScale.z);
                 }
                 break;
             }
