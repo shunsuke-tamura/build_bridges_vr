@@ -14,15 +14,12 @@ public class RightInputManager : MonoBehaviour
     private Vector3 endPos;
     private bool hit_f;
 
-    private GameObject shoot;
     // Start is called before the first frame update
     void Start()
     {
         rayObject.positionCount = 2; //頂点数を2個に設定（始点と終点）
         rayObject.startWidth = 0.01f; //線の太さを0.01mに設定
         rayObject.endWidth = 0.01f; //線の太さを0.01mに設定
-
-        shoot = GameObject.Find("ShootManager");
     }
 
     // Update is called once per frame
@@ -54,6 +51,14 @@ public class RightInputManager : MonoBehaviour
                 }
                 break;
             }
+
+            else if (hit.collider.tag == "button")
+            {
+                if (OVRInput.GetDown(OVRInput.RawButton.RIndexTrigger))
+                {
+                    hit.transform.root.gameObject.GetComponent<DefeatBridge>().PushDefeatButton();
+                }
+            }
         }
 
         if (!hit_f)
@@ -63,10 +68,5 @@ public class RightInputManager : MonoBehaviour
 
         rayObject.SetPosition(0, rightController.transform.position);
         rayObject.SetPosition(1, endPos);
-
-        if (OVRInput.GetDown(OVRInput.RawButton.A))
-        {
-            shoot.GetComponent<Shoot>().ShootBullet(rightController.transform.position, rightController.transform.forward, 30.0f);
-        }
     }
 }
